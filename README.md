@@ -69,27 +69,39 @@ User Input → ML Model → KRR Rules → Price Prediction → Recommendations
 
 ```
 HOUSING_PROJECT/
-├─ .venv/                      # Virtual environment
+├─ .venv/
 │  ├─ Include/
 │  ├─ Lib/
 │  ├─ Scripts/
 │  ├─ .gitignore
 │  └─ pyvenv.cfg
-├─ documentation/              # Project documentation
-├─ models/                     # Trained ML models
-│  ├─ housing_data.pkl        # Processed housing dataset
-│  ├─ price_model.pkl         # Random Forest price predictor
-│  ├─ tfidf_matrix.pkl        # TF-IDF feature matrix
-│  └─ tfidf_model.pkl         # TF-IDF vectorizer
-├─ notebooks/                  # Jupyter notebooks for development
-├─ static/                     # Frontend assets
-│  ├─ css/style.css
-│  └─ js/script.js
-├─ templates/                  # HTML templates
+├─ documentation/
+│  ├─ Collaborative Final Project.pdf
+│  ├─ GROUP CONTRIBUTION SHEET.docx
+│  ├─ GROUP CONTRIBUTION SHEET.pdf
+│  ├─ Intelligent Property Recommendation.docx
+│  └─ Intelligent Property Recommendation.pdf
+├─ models/
+│  ├─ housing_data.pkl
+│  ├─ price_model.pkl
+│  ├─ tfidf_matrix.pkl
+│  └─ tfidf_model.pkl
+├─ notebooks/
+│  └─ Training_Housing_Dataset.ipynb
+├─ static/
+│  ├─ css/
+│  │  └─ style.css
+│  ├─ images/
+│  └─ js/
+│     └─ script.js
+├─ templates/
 │  └─ index.html
-├─ app.py                      # Flask application
-├─ Housing Data Sets.csv       # Source dataset
-└─ requirements.txt            # Python dependencies
+├─ video presentation/
+│  └─ Housing_Project_Presentation.mp4
+├─ app.py
+├─ Housing Data Sets.csv
+├─ README.md
+└─ requirements.txt
 ```
 
 ---
