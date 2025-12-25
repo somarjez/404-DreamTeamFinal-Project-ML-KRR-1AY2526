@@ -1,4 +1,4 @@
-# Intelligent Property Recommendation System
+# Intelligent Property Recommendation System for Affordable and Sustainable Housing Choices
 
 > A hybrid AI platform combining Machine Learning and Knowledge Representation & Reasoning for affordable and sustainable housing choices in the Philippines.
 
