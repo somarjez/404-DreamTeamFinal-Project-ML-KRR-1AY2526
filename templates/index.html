@@ -3,118 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Housing Recommendation System</title>
+    <title>Intelligent Property Recommendation System for Affordable and Sustainable Housing Choices</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Housing Recommendation System</h1>
-        
-        <!-- Tab Navigation -->
-        <div class="tabs">
-            <button class="tab-btn active" onclick="showTab('search')">Search by Description</button>
-            <button class="tab-btn" onclick="showTab('filter')">Filter by Criteria</button>
-            <button class="tab-btn" onclick="showTab('predict')">Predict Future Price</button>
-        </div>
-
-        <!-- Search Tab -->
-        <div id="search-tab" class="tab-content active">
-            <h2>Search for Homes</h2>
-            <div class="form-group">
-                <label>Describe your dream home:</label>
-                <textarea id="search-description" rows="3" placeholder="e.g., 3 bedroom house near school with parking in Makati"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Number of results:</label>
-                <input type="number" id="search-top-n" value="5" min="1" max="20">
-            </div>
-            <button onclick="searchHomes()">Search</button>
-            <div id="search-results" class="results"></div>
-        </div>
-
-        <!-- Filter Tab -->
-        <div id="filter-tab" class="tab-content">
-            <h2>Filter Homes by Criteria</h2>
-            <div class="filter-form">
-                <div class="form-group">
-                    <label>Bedrooms:</label>
-                    <select id="filter-bedrooms">
-                        <option value="">Any</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5+</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Bathrooms:</label>
-                    <select id="filter-bathrooms">
-                        <option value="">Any</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4+</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Category:</label>
-                    <select id="filter-category">
-                        <option value="all">All</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Min Price (₱):</label>
-                    <input type="number" id="filter-min-price" placeholder="0">
-                </div>
-                <div class="form-group">
-                    <label>Max Price (₱):</label>
-                    <input type="number" id="filter-max-price" placeholder="100000000">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='🏠'">
+                    </div>
+                    <span>PropertyAI</span>
                 </div>
             </div>
-            <button onclick="filterHomes()">Apply Filters</button>
-            <div id="filter-results" class="results"></div>
-        </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-tab="search">
+                            <span class="nav-icon">🔍</span>
+                            <span>Smart Search</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="filter">
+                            <span class="nav-icon">⚙️</span>
+                            <span>Filter Homes</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-tab="predict">
+                            <span class="nav-icon">📈</span>
+                            <span>Price Prediction</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
 
-        <!-- Predict Tab -->
-        <div id="predict-tab" class="tab-content">
-            <h2>Predict Future House Price</h2>
-            <div class="predict-form">
-                <div class="form-group">
-                    <label>Bedrooms:</label>
-                    <input type="number" id="predict-bedrooms" value="3" min="1">
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header Bar -->
+            <header class="top-header">
+                <h1 class="header-title">Intelligent Property Recommendation System for Affordable and Sustainable Housing Choices</h1>
+            </header>
+
+            <!-- Tabs Navigation -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="search">Search by Description</button>
+                <button class="tab-btn" data-tab="filter">Filter by Criteria</button>
+                <button class="tab-btn" data-tab="predict">Predict Future Price</button>
+            </div>
+
+            <!-- Search Tab Content -->
+            <div id="search-tab" class="tab-content active">
+                <div class="form-panel">
+                    <h2 class="form-section-title">Describe Your Dream Home</h2>
+                    <form id="search-form" onsubmit="event.preventDefault(); searchHomes();">
+                        <div class="form-group">
+                            <label>Property Description</label>
+                            <textarea id="search-description" rows="4" placeholder="e.g., 3 bedroom house near school with parking in Makati, modern design with good ventilation"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Results</label>
+                            <input type="number" id="search-top-n" value="5" min="1" max="20">
+                        </div>
+                        <button type="submit" class="submit-btn">Search Properties</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label>Bathrooms:</label>
-                    <input type="number" id="predict-bathrooms" value="2" min="1">
-                </div>
-                <div class="form-group">
-                    <label>Car Spaces:</label>
-                    <input type="number" id="predict-car-spaces" value="2" min="0">
-                </div>
-                <div class="form-group">
-                    <label>Floor Area (sqm):</label>
-                    <input type="number" id="predict-floor-area" value="120" min="1">
-                </div>
-                <div class="form-group">
-                    <label>Land Size (sqm):</label>
-                    <input type="number" id="predict-land-size" value="200" min="1">
-                </div>
-                <div class="form-group">
-                    <label>Years to predict:</label>
-                    <input type="number" id="predict-years" value="5" min="1" max="50">
-                </div>
-                <div class="form-group">
-                    <label>Annual Growth Rate (%):</label>
-                    <input type="number" id="predict-growth-rate" value="5" min="0" max="100" step="0.1">
+                
+                <div class="results-panel">
+                    <div class="results-header">
+                        <div class="results-count">Found <strong id="search-count">0</strong> properties</div>
+                    </div>
+                    <div id="search-results" class="results">
+                        <div class="empty-state">
+                            <div class="empty-icon">🏡</div>
+                            <h3>Start Your Search</h3>
+                            <p>Enter a description to find your perfect property</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button onclick="predictPrice()">Predict Price</button>
-            <div id="predict-results" class="results"></div>
-        </div>
 
-        <!-- Loading -->
-        <div id="loading" class="loading" style="display: none;">Loading...</div>
+            <!-- Filter Tab Content -->
+            <div id="filter-tab" class="tab-content">
+                <div class="form-panel">
+                    <h2 class="form-section-title">Filter Properties</h2>
+                    <form id="filter-form" onsubmit="event.preventDefault(); filterHomes();">
+                        <div class="form-group">
+                            <label>Bedrooms</label>
+                            <select id="filter-bedrooms">
+                                <option value="">Any</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Bathrooms</label>
+                            <select id="filter-bathrooms">
+                                <option value="">Any</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="filter-category">
+                                <option value="all">All Categories</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Min Price (₱)</label>
+                            <input type="number" id="filter-min-price" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Max Price (₱)</label>
+                            <input type="number" id="filter-max-price" placeholder="100,000,000" min="0">
+                        </div>
+                        <button type="submit" class="submit-btn">Apply Filters</button>
+                    </form>
+                </div>
+                
+                <div class="results-panel">
+                    <div class="results-header">
+                        <div class="results-count">Found <strong id="filter-count">0</strong> properties</div>
+                    </div>
+                    <div id="filter-results" class="results">
+                        <div class="empty-state">
+                            <div class="empty-icon">⚙️</div>
+                            <h3>Apply Filters</h3>
+                            <p>Set your criteria to find matching properties</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Predict Tab Content -->
+            <div id="predict-tab" class="tab-content">
+                <div class="form-panel">
+                    <h2 class="form-section-title">Property Details</h2>
+                    <form id="predict-form" onsubmit="event.preventDefault(); predictPrice();">
+                        <div class="form-group">
+                            <label>Bedrooms</label>
+                            <input type="number" id="predict-bedrooms" value="3" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Bathrooms</label>
+                            <input type="number" id="predict-bathrooms" value="2" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Car Spaces</label>
+                            <input type="number" id="predict-car-spaces" value="2" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Floor Area (sqm)</label>
+                            <input type="number" id="predict-floor-area" value="120" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Land Size (sqm)</label>
+                            <input type="number" id="predict-land-size" value="200" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Years to Predict</label>
+                            <input type="number" id="predict-years" value="5" min="1" max="50">
+                        </div>
+                        <div class="form-group">
+                            <label>Annual Growth Rate (%)</label>
+                            <input type="number" id="predict-growth-rate" value="5" min="0" max="100" step="0.1">
+                        </div>
+                        <button type="submit" class="submit-btn">Calculate Prediction</button>
+                    </form>
+                </div>
+                
+                <div class="results-panel">
+                    <div class="results-header">
+                        <div class="results-count">Price Prediction Results</div>
+                    </div>
+                    <div id="predict-results" class="results">
+                        <div class="empty-state">
+                            <div class="empty-icon">📈</div>
+                            <h3>Predict Future Value</h3>
+                            <p>Enter property details to calculate future price</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Overlay -->
+            <div id="loading" class="loading" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>Loading properties...</p>
+            </div>
+        </main>
     </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
